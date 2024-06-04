@@ -1,9 +1,7 @@
 <script setup>
   import { ref } from 'vue'
   import axios from 'axios'
-  import HButton from './components/HButton.vue'
-  import HDivider from './components/HDivider.vue'
-  import HTable from './components/HTable.vue'
+  import HTable from '../components/HTable.vue'
 
   const data = ref([])
   const columns = [
@@ -41,18 +39,26 @@
 </script>
 
 <template>
-  <div>
-    <RouterLink to="/vue-demo/">Go to Home</RouterLink>
-    <RouterLink to="/vue-demo/about">Go to About</RouterLink>
-
-    <div class="container">
-      <RouterView />
-    </div>
-  </div>
+  <HTable bordered :columns="columns" :data-source="data" :pagination="{
+    total,
+    current,
+    pageSize,
+    onChange: (page) => {
+      current = page
+      getData()
+    }
+  }" style="margin-top: 12px;">
+    <template #name="{ text }">
+      <a>{{ text }}</a>
+    </template>
+    <template #age="{ text }">
+      <span>{{ text + 100 }}</span>
+    </template>
+    <template #title>Header111</template>
+    <template #footer>Footer111</template>
+  </HTable>
 </template>
 
-<style scoped lang="less">
-  .container {
-    padding: 24px;
-  }
+<style scoped>
+
 </style>
