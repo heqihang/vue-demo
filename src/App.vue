@@ -7,7 +7,7 @@
   const activeKey = ref(1)
 
   watch(() => activeKey.value, val => {
-    router.push(`/vue-demo/${val === 1 ? '' : 'table'}`)
+    router.push(`/vue-demo${val === 1 ? '' : '/table'}`)
   })
 
   onMounted(() => {

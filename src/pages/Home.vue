@@ -1,12 +1,12 @@
 <script setup>
-import {computed, watch} from 'vue'
+  import { ref, computed, watch } from 'vue'
   import HButton from '../components/HButton.vue'
   import HDivider from '../components/HDivider.vue'
   import { useCountStore } from '@/store/count'
 
   const store = useCountStore()
   const count = computed(() => store.count)
-  const qrText = 'https://heqihang.github.io/vue-demo/'
+  const qrText = ref('https://heqihang.github.io/vue-demo')
 
   function handleAdd() {
     store.count += 1
@@ -16,9 +16,7 @@ import {computed, watch} from 'vue'
   }
 
   watch(() => store.count, val => {
-    if (val !== 0) {
-      localStorage.setItem('count', val)
-    }
+    localStorage.setItem('count', val.toString())
   })
 </script>
 
