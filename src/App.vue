@@ -1,58 +1,38 @@
 <script setup>
-  import { ref } from 'vue'
-  import axios from 'axios'
-  import HButton from './components/HButton.vue'
-  import HDivider from './components/HDivider.vue'
-  import HTable from './components/HTable.vue'
+  import { ref, watch, onMounted } from 'vue'
+  import { useRoute, useRouter } from 'vue-router'
 
-  const data = ref([])
-  const columns = [
-    {
-      title: 'Name',
-      dataIndex: 'name',
-    },
-    {
-      title: 'Age',
-      dataIndex: 'age',
-    },
-    {
-      title: 'Gender',
-      dataIndex: 'genderName',
-    },
-    {
-      title: 'Date',
-      dataIndex: 'date',
-    },
-  ];
-  const current = ref(1)
-  const pageSize = ref(1)
-  const total = ref(0)
+  const route = useRoute()
+  const router = useRouter()
+  const activeKey = ref(1)
 
-  function getData() {
-    axios.get(`http://localhost:3005/users/select?pageNum=${current.value}&pageSize=${pageSize.value}&name=`).then(res => {
-      return res.data
-    }).then(res => {
-      data.value = res.data
-      total.value = res.total
-    })
-  }
+  watch(() => activeKey.value, val => {
+    router.push(`/vue-demo/${val === 1 ? '' : 'table'}`)
+  })
 
-  getData()
+  onMounted(() => {
+    setTimeout(() => {
+      activeKey.value = route.path.includes('table') ? 2 : 1
+    }, 0)
+  })
 </script>
 
 <template>
-  <div>
-    <RouterLink to="/vue-demo/">Go to Home</RouterLink>
-    <RouterLink to="/vue-demo/about">Go to About</RouterLink>
-
-    <div class="container">
-      <RouterView />
-    </div>
-  </div>
+  <a-watermark content="He" style="height: 100%;">
+    <a-tabs v-model:activeKey="activeKey">
+      <a-tab-pane :key="1" tab="Home" />
+      <a-tab-pane :key="2" tab="Table" />
+    </a-tabs>
+    <router-view></router-view>
+  </a-watermark>
 </template>
 
-<style scoped lang="less">
-  .container {
-    padding: 24px;
+<style>
+  html, body {
+    height: 100%;
+  }
+  #app {
+    padding: 8px;
+    height: 100%;
   }
 </style>
