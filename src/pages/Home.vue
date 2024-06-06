@@ -26,7 +26,7 @@
     <HButton @click="handleSub" type="primary">减1</HButton>
   </a-space>
   <HDivider dashed style="border-color: green;" />
-  <div>当前数字为 {{ count }}</div>
+  <h3 class="text-2xl font-bold text-amber-700">当前数字为 {{ count }}</h3>
   <HDivider dashed style="border-color: skyblue;" />
   <a-space direction="vertical" align="center">
     <a-qrcode :value="qrText" />
