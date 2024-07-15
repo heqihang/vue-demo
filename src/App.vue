@@ -7,12 +7,12 @@
   const activeKey = ref(1)
 
   watch(() => activeKey.value, val => {
-    router.push(`/vue-demo${val === 1 ? '' : '/table'}`)
+    router.push(`/vue-demo${val === 1 ? '' : val === 2 ? '/table' : '/electron'}`)
   })
 
   onMounted(() => {
     setTimeout(() => {
-      activeKey.value = route.path.includes('table') ? 2 : 1
+      activeKey.value = route.path.includes('table') ? 2 : route.path.includes('electron') ? 3 : 1
     }, 0)
   })
 </script>
@@ -22,6 +22,7 @@
     <a-tabs v-model:activeKey="activeKey">
       <a-tab-pane :key="1" tab="Home" />
       <a-tab-pane :key="2" tab="Table" />
+      <a-tab-pane :key="3" tab="Electron" />
     </a-tabs>
     <router-view></router-view>
   </a-watermark>
